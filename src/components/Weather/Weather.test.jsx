@@ -6,7 +6,7 @@ import '@testing-library/jest-dom/extend-expect'
 //TDD
 test("Weather render", async ()=> {
     //AAA Arrange Act assert
-    const  { findByRole } =  render(<Weather temperature={10}/>)
+    const  { findByRole } =  render(<Weather temperature={10} state='fog'/>)
     const temp = await findByRole('heading')
     expect(temp).toHaveTextContent("10")
 })

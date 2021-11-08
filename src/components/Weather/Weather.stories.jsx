@@ -6,4 +6,5 @@ title: "Weather",
 component: Weather
  }
 
- export const WeatherExample = () => (<Weather temperature={25}></Weather>)
+ export const WeatherCloude = () => <Weather temperature={25} state={'cloud'}/>
+ export const WeatherSunny = () => <Weather temperature={25} state={'sunny'}/>
