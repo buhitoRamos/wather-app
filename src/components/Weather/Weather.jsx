@@ -14,6 +14,13 @@ const stateByName = {
     sunny: WiDaySunny,
     rain: WiRain
 }
+const validValues = [
+    'cloud',
+    'cloudy',
+    'fog',
+    'sunny',
+    'rain',
+]
 // otra manera de acceder a una propiedad de un objeto y me ahorro un switch
 const renderState = state => {
     const Icon = stateByName[state] 
@@ -33,7 +40,7 @@ const Weather = ({ temperature, state }) => {
 
 Weather.propTypes = {
     temperature: PropTypes.number.isRequired,
-    state: PropTypes.string.isRequired,
+    state: PropTypes.oneOf(validValues).isRequired,
 }
 
 export default Weather
