@@ -6,6 +6,7 @@ import Weather from '../components/Weather'
 import WeatherDetail from '../components/WeatherDetail'
 import ForecastChart from '../components/ForecastChart'
 import Forecast from '../components/Forecast'
+import AppFrame from '../components/Appframe/AppFrame'
 
 const CityPage = props => {
     const city = "Bs As"
@@ -34,40 +35,42 @@ const CityPage = props => {
             temperature: 20
         },
         {
-           weekDay: 'Martes',
-           hour: 11,
-           state: "fog",
-           temperature: 30
-       },
-       {
-           weekDay: 'Miercoles',
-           hour: 15,
-           state: "rain",
-           temperature: 20
-       }
+            weekDay: 'Martes',
+            hour: 11,
+            state: "fog",
+            temperature: 30
+        },
+        {
+            weekDay: 'Miercoles',
+            hour: 15,
+            state: "rain",
+            temperature: 20
+        }
     ]
     return (
-        <Grid container
-            justify="space-around"
-            direction="column"
-            spacing={2}>
-            <Grid item container xs={12}
-             justify="center"
-             alignItems="flex-end">
-                <CityInfo city={city} country={country} />
-            </Grid>
-            <Grid container  item xs={12} 
-            justify="center">
+        <AppFrame>
+            <Grid container
+                justify="space-around"
+                direction="column"
+                spacing={2}>
+                <Grid item container xs={12}
+                    justify="center"
+                    alignItems="flex-end">
+                    <CityInfo city={city} country={country} />
+                </Grid>
+                <Grid container item xs={12}
+                    justify="center">
                     <Weather state={state} temperature={temperature} />
                     <WeatherDetail humidity={humidity} wind={wind} />
+                </Grid>
+                <Grid item >
+                    <ForecastChart data={data} />
+                </Grid>
+                <Grid item >
+                    <Forecast forecastItemList={forecastItemListExample} />
+                </Grid>
             </Grid>
-            <Grid item >
-                <ForecastChart data={data} />
-            </Grid>
-            <Grid item >
-            <Forecast forecastItemList={forecastItemListExample}/>
-            </Grid>
-        </Grid>
+        </AppFrame>
     )
 }
 
