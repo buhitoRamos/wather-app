@@ -6,4 +6,4 @@ title: "WelcomeScreen",
 component: WelcomeScreen
  }
 
- export const WelcomeScreenExample = () => (<WelcomeScreen humidity={80} wind={20} />)
+ export const WelcomeScreenExample = () => (<WelcomeScreen > Lorem ipsum </WelcomeScreen>)
