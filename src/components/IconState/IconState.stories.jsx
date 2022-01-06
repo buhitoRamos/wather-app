@@ -7,4 +7,4 @@ title: "IconState",
 component: IconState
  }
  export const IconStateExample = () => (<IconState
-    state={"cloud"}/>)
+    state={"clouds"}/>)

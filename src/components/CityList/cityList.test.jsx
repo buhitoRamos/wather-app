@@ -7,7 +7,7 @@ const cities = [
     {city: ' Barcelona', country: 'España'}
 ]
 test ("CityList renders", async () => {
-    const { findAllByRole } = render(<CityList cities={cities} />)
+    const { findAllByRole } = render(<CityList cities={cities} onClickCity={()=>{}}/>)
     const items = await findAllByRole("button")
 
     expect(items).toHaveLength(2)

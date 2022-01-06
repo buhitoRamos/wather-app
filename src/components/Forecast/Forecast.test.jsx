@@ -5,13 +5,13 @@
     {
         weekDay: 'Lunes',
         hour: 12,
-        state: "sunny",
+        state: "clear",
         temperature: 20
     },
     {
        weekDay: 'Martes',
        hour: 11,
-       state: "fog",
+       state: "drizzle",
        temperature: 30
    },
    {

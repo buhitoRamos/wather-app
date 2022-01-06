@@ -11,7 +11,7 @@ const Weather = ({ temperature, state }) => {
     return (
         <Grid container item
         direction="row"
-        justify="center"
+        justifyContent="center"
         alignItems="center"
         spacing={1}>
             <IconContext.Provider value={{ size: '6em' }}>

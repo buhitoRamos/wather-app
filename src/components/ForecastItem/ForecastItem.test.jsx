@@ -3,7 +3,7 @@ import { render } from '@testing-library/react'
 import ForecastItem from './ForecastItem'
 
 test('ForecastItem render', async ()=> {
-    const { findByText } = render(<ForecastItem weekDay="Lunes" hour={10} temperature={40} state='fog'/>)
+    const { findByText } = render(<ForecastItem weekDay="Lunes" hour={10} temperature={40} state='rain'/>)
 
     const weekDay = await findByText("Lunes")
     const hour = await findByText(/10/)
