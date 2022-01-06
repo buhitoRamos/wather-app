@@ -7,7 +7,9 @@ import { Paper } from '@material-ui/core'
 // temporal
 const cities = [
     { city: "Buenos Aires", country: "Argentina" },
-    { city: ' Barcelona', country: 'España' }
+    { city: ' Barcelona', country: 'España' },
+    {city: 'Bogota', country: 'Colombia'},
+    {city: 'Montevideo', country: 'Uruguay'}
 ]
 
 const MainPage = () => {
