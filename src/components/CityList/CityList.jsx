@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import axios from 'axios'
+import convertUnits from 'convert-units'
+import { Alert } from '@material-ui/lab'
 import Grid from '@material-ui/core/Grid'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import CityInfo from './../CityInfo'
 import Weather from './../Weather'
 
-// li: es un item (según tag html, tiene el role "listitem")
-// renderCityAndCountry se va a convertir en una función que retorna otra función
+const getCityCountry = (city, country) => `${city}-${country}`
 const renderCityAndCountry = eventOnClickCity => (cityAndCountry, weather) => {
     const { city, country } = cityAndCountry
     // const { temperature, state } = weather
@@ -16,9 +17,9 @@ const renderCityAndCountry = eventOnClickCity => (cityAndCountry, weather) => {
     return (
         <ListItem
             button
-            key={city} 
+            key={city}
             onClick={eventOnClickCity} >
-            <Grid container 
+            <Grid container
                 justifyContent="center"
                 alignItems="center"
             >
@@ -30,14 +31,9 @@ const renderCityAndCountry = eventOnClickCity => (cityAndCountry, weather) => {
                 <Grid item
                     md={3}
                     xs={12}>
-                    {
-                        weather ? 
-                        (<Weather 
-                        temperature={weather.temperature} 
-                        state={weather.state} />) 
-                        : 
-                        ("No hay datos")
-                    }
+                    <Weather
+                        temperature={weather && weather.temperature}
+                        state={weather && weather.state} />
                 </Grid>
             </Grid>
         </ListItem>
@@ -47,46 +43,35 @@ const renderCityAndCountry = eventOnClickCity => (cityAndCountry, weather) => {
 // cities: es un array, y en cada item tiene que tener la ciudad, pero además el country
 // ul: tag html para listas no ordenadas
 const CityList = ({ cities, onClickCity }) => {
-    /* allWeather (final)
-      {
-          [Buenos Aires-argentina]: { temperature: 10, state: "sunny" },
-          [Bogotá-Colombia]: { temperature: 10, state: "sunny" },
-          [Madrid-España]: { temperature: 10, state: "sunny" },
-          [Ciudad de México-México]: { temperature: 10, state: "sunny" }
-      }
-    */
+
     const [allWeather, setAllWeather] = useState({})
+    const [error, setError] = useState(null)
 
     useEffect(() => {
-        const setWeather = (city, country) => {
+        const setWeather = async (city, country) => {
             const appid = "f99bbd9e4959b513e9bd0d7f7356b38d"
             const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${appid}`;
-            axios
-            .get(url)
-            .then(response => {
-                const { data } = response
-                const temperature = Math.round(data.main.temp - 273.15)
-                const state = data.weather[0].main.toLowerCase()
 
-                const propName = `${city}-${country}` // Ej: [Ciudad de México-México]
+            try {
+                const response = await axios.get(url)
+                const { data } = response
+                const temperature = Number(convertUnits(data.main.temp).from('K').to('C').toFixed(0))
+                const state = data.weather[0].main.toLowerCase()
+                const propName = getCityCountry(city, country) // Ej: [Ciudad de México-México]
                 const propValue = { temperature, state } // Ej: { temperature: 10, state: "sunny" }
-            
-                console.log("propName", propName)
-                console.log("propValue", propValue)
-                /*
-                allWeather 1er pasada: 
-                      { 
-                          [Buenos Aires-argentina]: { temperature: 10, state: "sunny" } 
-                      }
-                allWeather 2da pasada: 
-                      { 
-                          [Buenos Aires-argentina]: { temperature: 10, state: "sunny" },
-                          [Bogotá-Colombia]: { temperature: 10, state: "sunny" }
-                      }                    
-                */
-               // set[VARIABLE_ESTADO](VARIABLE_ESTADO => VARIABLE_ESTADO+1)
                 setAllWeather(allWeather => ({ ...allWeather, [propName]: propValue }))
-            })
+
+            } catch (error) {
+                if (error.response) { // error que nos responde el servidor
+                    setError("Ha ocurrido un error en el servidor del clima")
+                } else if (error.request) {  //error por no llegar al servidor
+                    setError("Verifique la conexion a internet")
+
+                } else { //errores imprevistos
+                    setError("error al cargar los datos")
+                }
+            }
+
         }
 
         cities.forEach(({ city, country }) => {
@@ -98,12 +83,18 @@ const CityList = ({ cities, onClickCity }) => {
     //const weather = { temperature: 10, state: "sunny" }
 
     return (
-        <List>
+        <div>
+            {
+                error && <Alert onClose={()=> setError(null)} severity='error'>{error}</Alert>
+            }
+           <List>
             {
                 cities.map(cityAndCountry => renderCityAndCountry(onClickCity)(cityAndCountry, 
-                    allWeather[`${cityAndCountry.city}-${cityAndCountry.country}`]))
+                    allWeather[getCityCountry(cityAndCountry.city, cityAndCountry.country)]))
             }
-        </List>
+        </List> 
+        </div>
+        
     )
 }
 

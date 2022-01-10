@@ -8,7 +8,7 @@ import { Link as LinkRouter } from 'react-router-dom'
 const AppFrame = ({ children }) => {
   return (
     <Grid container
-      justify="center">
+      justifyContent="center">
       <AppBar position="static">
         <Toolbar variant="dense">
           <IconButton color="inherit"
