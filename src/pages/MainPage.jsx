@@ -6,16 +6,18 @@ import { Paper } from '@material-ui/core'
 
 // temporal
 const cities = [
-    { city: "Buenos Aires", country: "Argentina" },
-    { city: ' Barcelona', country: 'España' },
-    {city: 'Bogota', country: 'Colombia'},
-    {city: 'Montevideo', country: 'Uruguay'}
+    { city: "Buenos Aires", country: "Argentina", countryCode: "AR" },
+    { city: ' Barcelona', country: 'España', countryCode:"ES" },
+    {city: 'Bogota', country: 'Colombia', countryCode: "CO"},
+    {city: 'Ciudad de México', country: 'México', countryCode: "MX"}
 ]
 
 const MainPage = () => {
     const history = useHistory()
-    const onClickHandler = () => {
-        history.push("/city")
+    const onClickHandler = (city, countryCode) => {
+      
+      console.log(city, countryCode)
+        // history.push("/city")
     }
 
     return (
