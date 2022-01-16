@@ -1,7 +1,7 @@
 //rafcp importa todo lo necesario
 import React from 'react'
 import PropTypes from 'prop-types'
-import { WiDayCloudy, WiDaySunny, WiRain, WiSnow, WiRaindrop, WiThunderstorm, WiFog, WiCloud } from 'react-icons/wi'
+import { WiDayCloudy, WiDaySunny, WiRain, WiSnow, WiRaindrop, WiThunderstorm, WiFog, WiCloud, WiDayHaze } from 'react-icons/wi'
 
 
 //creo objeto con todos los iconos importados que podria utilizar
@@ -14,7 +14,9 @@ const stateByName = {
     drizzle: WiRaindrop,
     thunderstorm: WiThunderstorm,
     fog: WiFog,
-    clouds: WiCloud
+    clouds: WiCloud,
+    haze: WiDayHaze
+
 }
 export const validValues = [
     'cloudy',
@@ -25,7 +27,8 @@ export const validValues = [
     'drizzle',
     'thunderstorm',
     'clouds',
-    'sunny'
+    'sunny',
+    'haze'
 
 ]
 

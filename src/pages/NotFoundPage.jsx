@@ -10,11 +10,11 @@ const NotFoundPage = () => {
     return (
         <Grid container
             direction="column"
-            justify="center"
+            justifyContent="center"
             className="full">
             <div className="highlight">
                 <Grid item container xs={12}
-                    justify="center"
+                    justifyContent="center"
                     alignItems="center">
                     <Grid item>
                         <IconContext.Provider value={{ size:"6em" }}>
@@ -24,7 +24,7 @@ const NotFoundPage = () => {
                     <Grid item
                         container
                         direction="column"
-                        justify="center"
+                        justifyContent="center"
                         alignItems="center">
                         <Typography variant="h4" color="inherit">
                             404 | La página no existe

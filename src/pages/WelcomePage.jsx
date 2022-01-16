@@ -11,12 +11,12 @@ const WelcomePage = () => {
         <WelcomeScreen>
             <Grid container
                 direction='column'
-                justify='center'
+                justifyContent='center'
                 className='full'>
                 <div className="highligth">
                     <Grid item
                         container xs={12}
-                        justify='center'
+                        justifyContent='center'
                         alignItems='center'>
                         <IconContext.Provider value={{ size: '6em' }}>
                             <WiDaySunny />
@@ -25,7 +25,7 @@ const WelcomePage = () => {
                     <Grid item
                         container
                         direction='column'
-                        justify='center'
+                        justifyContent='center'
                         alignItems='center'>
                         <Typography variant='h4' color='inherit'>
                             Weather App
