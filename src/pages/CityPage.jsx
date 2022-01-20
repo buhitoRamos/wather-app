@@ -1,9 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import axios from 'axios'
-import moment from 'moment'
-import 'moment/locale/es'
-import convertUnits from 'convert-units'
-import Grid from '@material-ui/core/Grid'
+import React from 'react'
+import { Grid, LinearProgress } from '@material-ui/core'
 import { useParams } from 'react-router-dom'
 import CityInfo from '../components/CityInfo'
 import Weather from '../components/Weather'
@@ -11,72 +7,22 @@ import WeatherDetail from '../components/WeatherDetail'
 import ForecastChart from '../components/ForecastChart'
 import Forecast from '../components/Forecast'
 import AppFrame from '../components/Appframe/AppFrame'
+import useCityPage from '../hooks/useCityPage'
+import useCityList from '../hooks/useCityList'
+import { getCityCode } from '../utils/utils'
+import { getCountryNameByCountryCode } from '../utils/getCities'
 
-
-const forecastItemListExample = [
-    {
-        weekDay: 'Lunes',
-        hour: 12,
-        state: "sunny",
-        temperature: 20
-    },
-    {
-        weekDay: 'Martes',
-        hour: 11,
-        state: "fog",
-        temperature: 30
-    },
-    {
-        weekDay: 'Miercoles',
-        hour: 15,
-        state: "rain",
-        temperature: 20
-    }
-]
 const CityPage = props => {
     const { city, countryCode } = useParams()
-    const [data, setData] = useState(null)
-    const [forecastItemList, setForecastItemList] = useState(null)
-    useEffect(() => {
-        const getForecast = async () => {
-            const appid = "f99bbd9e4959b513e9bd0d7f7356b38d"
-            const url = `https://api.openweathermap.org/data/2.5/forecast?q=${city},${countryCode}&appid=${appid}`;
+    const { chartData, forecastItemList } = useCityPage(city, countryCode)
+    const { allWeather } = useCityList([{ city, countryCode }])
+    const weather = allWeather[getCityCode(city, countryCode)]
 
-            try {
-                const { data } = await axios.get(url)
-
-                const daysAhead = [0, 1, 2, 3, 4, 5]
-                const days = daysAhead.map(day => moment().add(day, 'd'))
-                const dataAux = days.map(day => {
-
-                    const tempObjArray = data.list.filter(item => {
-                        const dayOfYear = moment.unix(item.dt).dayOfYear()
-                        return dayOfYear === day.dayOfYear()
-
-                    })
-                    const temps = tempObjArray.map(item => Number(convertUnits(item.main.temp).from('K').to('C').toFixed(0)))
-                    return ({
-                        dayHour: day.format('ddd'),
-                        min: Math.min(...temps),
-                        max: Math.max(...temps),
-                    })
-                })
-                setData(dataAux)
-                setForecastItemList(forecastItemListExample)
-
-            } catch (error) {
-                console.log(error)
-            }
-
-        }
-
-        getForecast()
-    }, [city, countryCode])
-    const country = "Arg"
-    const state = "cloudy"
-    const temperature = 20
-    const humidity = 80
-    const wind = 5
+    const state = weather && weather.state
+    const temperature = weather && weather.temperature
+    const country = getCountryNameByCountryCode(countryCode)
+    const humidity = weather && weather.humidity
+    const wind = weather && weather.wind
 
     return (
         <AppFrame>
@@ -92,11 +38,19 @@ const CityPage = props => {
                 <Grid container item xs={12}
                     justifyContent="center">
                     <Weather state={state} temperature={temperature} />
-                    <WeatherDetail humidity={humidity} wind={wind} />
+                    {
+                        humidity && wind &&
+                        <WeatherDetail humidity={humidity} wind={wind} />
+                    }
                 </Grid>
                 <Grid item >
                     {
-                        data && <ForecastChart data={data} />
+                        !chartData && !forecastItemList && <LinearProgress />
+                    }
+                </Grid>
+                <Grid item >
+                    {
+                        chartData && <ForecastChart data={chartData} />
                     }
                 </Grid>
                 <Grid item >

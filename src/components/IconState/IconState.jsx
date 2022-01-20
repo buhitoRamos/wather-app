@@ -15,7 +15,8 @@ const stateByName = {
     thunderstorm: WiThunderstorm,
     fog: WiFog,
     clouds: WiCloud,
-    haze: WiDayHaze
+    haze: WiDayHaze,
+    mist: WiDayCloudy
 
 }
 export const validValues = [
@@ -28,7 +29,8 @@ export const validValues = [
     'thunderstorm',
     'clouds',
     'sunny',
-    'haze'
+    'haze',
+    'mist'
 
 ]
 
