@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import { Grid, LinearProgress } from '@material-ui/core'
 import { useParams } from 'react-router-dom'
 import CityInfo from '../components/CityInfo'
@@ -12,10 +12,13 @@ import useCityList from '../hooks/useCityList'
 import { getCityCode } from '../utils/utils'
 import { getCountryNameByCountryCode } from '../utils/getCities'
 
-const CityPage = props => {
+const CityPage = ({data, actions}) => {
+    const { onSetAllWeather} =  actions
+    const {allWeather}= data
     const { city, countryCode } = useParams()
     const { chartData, forecastItemList } = useCityPage(city, countryCode)
-    const { allWeather } = useCityList([{ city, countryCode }])
+    const cities = useMemo(()=> ( [{city, countryCode}] ), [city, countryCode] )
+    useCityList(cities, allWeather, onSetAllWeather)
     const weather = allWeather[getCityCode(city, countryCode)]
 
     const state = weather && weather.state
