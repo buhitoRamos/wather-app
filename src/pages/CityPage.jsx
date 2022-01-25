@@ -1,6 +1,5 @@
 import React, { useMemo } from 'react'
 import { Grid, LinearProgress } from '@material-ui/core'
-import { useParams } from 'react-router-dom'
 import CityInfo from '../components/CityInfo'
 import Weather from '../components/Weather'
 import WeatherDetail from '../components/WeatherDetail'
@@ -13,10 +12,10 @@ import { getCityCode } from '../utils/utils'
 import { getCountryNameByCountryCode } from '../utils/getCities'
 
 const CityPage = ({data, actions}) => {
-    const { onSetAllWeather} =  actions
-    const {allWeather}= data
-    const { city, countryCode } = useParams()
-    const { chartData, forecastItemList } = useCityPage(city, countryCode)
+    const { onSetAllWeather, onSetChartData, onSetForecastItemList} =  actions
+    const {allWeather, forecastItemList, chartData}= data
+    
+   const {city, countryCode} =  useCityPage( onSetChartData, onSetForecastItemList)
     const cities = useMemo(()=> ( [{city, countryCode}] ), [city, countryCode] )
     useCityList(cities, allWeather, onSetAllWeather)
     const weather = allWeather[getCityCode(city, countryCode)]

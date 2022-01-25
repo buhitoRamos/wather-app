@@ -1,21 +1,22 @@
-import { useState, useEffect } from 'react'
+import {  useEffect } from 'react'
 import axios from 'axios'
 import getCharData from '../utils/transforms/getChartData'
 import getUrls from '../utils/urls'
 import getForecastItemList from '../utils/transforms/getForecastItemList'
+import { useParams } from 'react-router-dom'
 
-const useCityPage = (city, countryCode) => {
-    const [chartData, setChartData] = useState(null)
-    const [forecastItemList, setForecastItemList] = useState(null)
+
+const useCityPage = (onSetChartData, onSetForecastItemList) => {
+    const { city, countryCode } = useParams()
     useEffect(() => {
         const getForecast = async () => {
             const url = getUrls("forecast", city, countryCode)
             try {
                 const { data } = await axios.get(url)
                 const dataAux = getCharData(data)
-                setChartData(dataAux)
+                onSetChartData(dataAux)
                 const forecastItemListAux = getForecastItemList(data)
-                setForecastItemList(forecastItemListAux)
+                onSetForecastItemList(forecastItemListAux)
             } catch (error) {
                 console.log(error)
             }
@@ -23,7 +24,7 @@ const useCityPage = (city, countryCode) => {
         }
 
         getForecast()
-    }, [city, countryCode])
-    return { city, chartData, forecastItemList }
+    }, [city, countryCode, onSetChartData, onSetForecastItemList])
+    return { city, countryCode }
 }
 export default useCityPage
