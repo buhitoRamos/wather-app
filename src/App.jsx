@@ -13,8 +13,17 @@ import {
 
 const App = () => {
     const [allWeather, setAllWeather] = useState({})
-    const [chartData, onSetChartData]= useState(null)
-    const [forecastItemList, onSetForecastItemList] = useState(null)
+    const [allChartData, setAllChartData]= useState({})
+    const [allForecastItemList, setAllForecastItemList] = useState({})
+
+    const onSetChartData = useCallback( (chartDataCity)=> {
+        setAllChartData(chartData => ({...chartData, ...chartDataCity}) )
+    }, [setAllChartData])
+
+    const onSetForecastItemList = useCallback( (forecastCity)=> {
+        setAllForecastItemList(forecast => ( {...forecast, ...forecastCity}) )
+
+    },[setAllForecastItemList])
 
 
     const onSetAllWeather = useCallback((WeatherCity)=> {
@@ -34,10 +43,10 @@ const App = () => {
     const data =  useMemo(()=> (
         {
             allWeather,
-            forecastItemList,
-            chartData
+            allForecastItemList,
+            allChartData
         }
-    ), [allWeather,  chartData, forecastItemList])
+    ), [allWeather,  allChartData, allForecastItemList])
 
     return (
         <Router>
