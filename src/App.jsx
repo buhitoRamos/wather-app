@@ -1,4 +1,4 @@
-import React, {useState, useCallback, useMemo} from 'react'
+import React, {useState, useCallback, useMemo, useReducer} from 'react'
 import WelcomePage from './pages/WelcomePage'
 import MainPage from './pages/MainPage'
 import CityPage from './pages/CityPage'
@@ -12,6 +12,11 @@ import {
 
 
 const App = () => {
+    const initialValue = {}
+    const reducer = () => {
+
+    }
+    const [state, dispach]= useReducer(reducer, initialValue)
     const [allWeather, setAllWeather] = useState({})
     const [allChartData, setAllChartData]= useState({})
     const [allForecastItemList, setAllForecastItemList] = useState({})
