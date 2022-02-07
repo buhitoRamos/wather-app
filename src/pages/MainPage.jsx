@@ -9,10 +9,10 @@ import { getCities } from '../utils/getCities'
 
 const MainPage = ( {data, actions} )=> {
     const history = useHistory()
-    const onClickHandler = (city, countryCode) => {
+    const onClickHandler = React.useCallback((city, countryCode) => {
       
          history.push(`/city/${countryCode}/${city}`)
-    }
+    }, [history])
 
     return (
         <AppFrame>

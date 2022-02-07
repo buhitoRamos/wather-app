@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import PropTypes from 'prop-types'
 import 'typeface-roboto'
 import { Grid } from '@material-ui/core'
@@ -9,13 +9,14 @@ import IconState, {validValues} from '../IconState'
 
 
 const Weather = ({ temperature, state }) => {
+    const iconSize = useMemo(() => ({ size: '6em' }),[] )
     return (
         <Grid container item
         direction="row"
         justifyContent="center"
         alignItems="center"
         spacing={1}>
-            <IconContext.Provider value={{ size: '6em' }}>
+            <IconContext.Provider value={iconSize}>
                 {   state ?
                     <IconState state={state} />
                     :

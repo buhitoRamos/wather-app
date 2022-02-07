@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useMemo} from 'react'
 import PropTypes from 'prop-types'
 import {Grid, AppBar,Toolbar, IconButton, Link, Typography } from '@material-ui/core'
 import { IconContext } from 'react-icons/lib'
@@ -6,6 +6,7 @@ import { WiDaySunny } from 'react-icons/wi'
 import { Link as LinkRouter } from 'react-router-dom'
 
 const AppFrame = ({ children }) => {
+  const iconContextSize = useMemo(() => ({size: '2em'}), [])
   return (
     <Grid container
       justifyContent="center">
@@ -18,7 +19,7 @@ const AppFrame = ({ children }) => {
               to="/main"
               color="inherit">
               <IconContext.Provider
-                value={{ size: '2em' }}>
+                value={iconContextSize}>
                 <WiDaySunny />
               </IconContext.Provider>
             </Link>

@@ -9,14 +9,20 @@ import CityInfo from './../CityInfo'
 import Weather from './../Weather'
 import { getCityCode } from '../../utils/utils'
 
-const renderCityAndCountry = eventOnClickCity => (cityAndCountry, weather) => {
-    const { city, country, countryCode } = cityAndCountry
-    // const { temperature, state } = weather
+const areEql = (prev, next) => {
+console.log('city', prev.city === next.city)
+console.log('countryCode', prev.countryCode === next.countryCode)
+console.log('country', prev.country === next.country)
+console.log('weather', prev.weather === next.weather)
+console.log('evenOnClickCity', prev.evenOnClickCity === next.evenOnClickCity)
+return false
 
+}
+
+const CityListItem = React.memo(({city, countryCode, country, eventOnClickCity, weather}) => {
     return (
         <ListItem
             button
-            key={city}
             onClick={() => eventOnClickCity(city, countryCode) }>
             <Grid container
                 justifyContent="center"
@@ -37,6 +43,14 @@ const renderCityAndCountry = eventOnClickCity => (cityAndCountry, weather) => {
             </Grid>
         </ListItem>
     )
+}, areEql)
+CityListItem.displayName='CityListItem'
+
+const renderCityAndCountry = eventOnClickCity => (cityAndCountry, weather) => {
+    const { city } = cityAndCountry
+
+    return <CityListItem key={city} eventOnClickCity={eventOnClickCity} {...cityAndCountry} weather={weather} />
+       
 }
 
 
@@ -72,4 +86,4 @@ CityList.propTypes = {
     onClickCity: PropTypes.func.isRequired,
 }
 
-export default CityList
+export default React.memo(CityList)
