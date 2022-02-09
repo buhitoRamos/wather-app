@@ -8,6 +8,7 @@ import ListItem from '@material-ui/core/ListItem'
 import CityInfo from './../CityInfo'
 import Weather from './../Weather'
 import { getCityCode } from '../../utils/utils'
+import { WeatherStateContext, WeatherDispatchContext } from '../../WeatherContext'
 
 const areEql = (prev, next) => {
 console.log('city', prev.city === next.city)
