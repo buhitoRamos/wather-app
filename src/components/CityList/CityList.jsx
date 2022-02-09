@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import PropTypes from 'prop-types'
 import { Alert } from '@material-ui/lab'
 import Grid from '@material-ui/core/Grid'
@@ -54,8 +54,10 @@ const renderCityAndCountry = eventOnClickCity => (cityAndCountry, weather) => {
 }
 
 
-const CityList = ({ cities, onClickCity, data, actions }) => {
+const CityList = ({ cities, onClickCity}) => {
 
+const actions = useContext(WeatherDispatchContext)
+const data = useContext(WeatherStateContext)
     const { allWeather } = data
     const {error, setError} =  useCityList(cities, allWeather, actions)
 

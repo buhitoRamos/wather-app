@@ -1,4 +1,5 @@
 import React, {useReducer} from 'react'
+import { WeatherStateContext, WeatherDispatchContext } from './WeatherContext'
 import WelcomePage from './pages/WelcomePage'
 import MainPage from './pages/MainPage'
 import CityPage from './pages/CityPage'
@@ -40,23 +41,27 @@ const App = () => {
    
 
     return (
-        <Router>
-            <Switch>
-                <Route exact path="/">
-                    <WelcomePage />
-                </Route>
-                <Route path="/main">
-                    <MainPage data={state} actions={dispatch} />
-                </Route>
-                <Route path="/city/:countryCode/:city"
-                >
-                    <CityPage data={state} actions={dispatch}/>
-                </Route>
-                <Route >
-                    <NotFoundPage />
-                </Route>
-            </Switch>
-        </Router>
+        <WeatherDispatchContext.Provider value={dispatch}>
+            <WeatherStateContext.Provider value={state}>
+                <Router>
+                    <Switch>
+                        <Route exact path="/">
+                            <WelcomePage />
+                        </Route>
+                        <Route path="/main">
+                            <MainPage/>
+                        </Route>
+                        <Route path="/city/:countryCode/:city"
+                        >
+                            <CityPage data={state} actions={dispatch} />
+                        </Route>
+                        <Route >
+                            <NotFoundPage />
+                        </Route>
+                    </Switch>
+                </Router>
+            </WeatherStateContext.Provider>
+        </WeatherDispatchContext.Provider>
     )
 }
 

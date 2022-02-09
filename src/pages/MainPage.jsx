@@ -7,7 +7,7 @@ import { getCities } from '../utils/getCities'
 
 
 
-const MainPage = ( {data, actions} )=> {
+const MainPage = ()=> {
     const history = useHistory()
     const onClickHandler = React.useCallback((city, countryCode) => {
       
@@ -18,8 +18,6 @@ const MainPage = ( {data, actions} )=> {
         <AppFrame>
             <Paper elevation={3}>
                 <CityList cities={getCities()}
-                actions={actions}
-                data={data}
                 onClickCity={onClickHandler} />
             </Paper>
         </AppFrame>
