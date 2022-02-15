@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import { Alert } from '@material-ui/lab'
 import Grid from '@material-ui/core/Grid'
@@ -8,7 +8,7 @@ import ListItem from '@material-ui/core/ListItem'
 import CityInfo from './../CityInfo'
 import Weather from './../Weather'
 import { getCityCode } from '../../utils/utils'
-import { WeatherStateContext, WeatherDispatchContext } from '../../WeatherContext'
+import { useWeatherStateContext, useWeatherDispatchContext } from '../../WeatherContext'
 
 const areEql = (prev, next) => {
 console.log('city', prev.city === next.city)
@@ -57,8 +57,8 @@ const renderCityAndCountry = eventOnClickCity => (cityAndCountry, weather) => {
 
 const CityList = ({ cities, onClickCity}) => {
 
-const actions = useContext(WeatherDispatchContext)
-const data = useContext(WeatherStateContext)
+const actions = useWeatherDispatchContext()
+const data = useWeatherStateContext()
     const { allWeather } = data
     const {error, setError} =  useCityList(cities, allWeather, actions)
 
